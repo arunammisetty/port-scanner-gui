@@ -1,13 +1,13 @@
-# Network Port Scanner GUI
+# Network Port Scanner with GUI
 
-A simple and lightweight **port scanner web application** built using **Python** and **Streamlit**. It allows users to input a target IP address and scan a range of ports to determine which are open or closed.
+This is a simple port scanner created with **Python** and **Tkinter** for the graphical user interface (GUI). It allows users to scan a range of ports on a target IP address to check whether each port is open or closed.
 
 ## Features
 
-- Input target IP address and custom port range
-- Scan ports directly from a web browser
-- Display real-time results with port status
-- Easy to set up and run locally
+- Input a target IP address and port range (start and end ports)
+- Start scanning with a button click
+- View results in real-time in a listbox
+- Simple and easy-to-use GUI
 
 ---
 
@@ -18,30 +18,24 @@ Follow the steps below to install and run the app:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/<your-username>/streamlit-port-scanner.git
-cd streamlit-port-scanner
+git clone https://github.com/arunammisetty/port-scanner-gui.git
+cd port-scanner-gui
 
-2. (Optional) Create and Activate a Virtual Environment
 
-It's highly recommended to use a virtual environment to avoid dependency conflicts.
+### 2. (Optional) Create and Activate a Virtual Environment
+
+It is recommended to use a virtual environment to manage dependencies:
 
 python -m venv venv
 source venv/bin/activate       # On Windows: venv\Scripts\activate
 
 3. Install Required Dependencies
 
-pip install streamlit
+pip install -r requirements.txt
 
 4. Run the Application
 
-streamlit run port_scanner.py
-
-5. Access the Web App
-
-Streamlit will automatically open the app in your browser.
-If it doesn't, navigate to:
-
-http://localhost:8501
+python port_scanner_gui.py
 
 
 ---
@@ -54,10 +48,10 @@ Usage
 2. Specify the start port and end port for scanning.
 
 
-3. Click the Start Scan button to begin scanning.
+3. Click the "Start Scan" button to begin scanning.
 
 
-4. View the real-time status of each port in the web interface.
+4. View the results displayed in the listbox (open or closed ports).
 
 
 
@@ -66,16 +60,17 @@ Usage
 
 Code Overview
 
-Here's the Python code that powers the Streamlit app:
+Here’s an overview of the Python code for the port scanner:
 
 import socket
-import streamlit as st
+import tkinter as tk
+from tkinter import messagebox
 
 def scan_port(ip, port):
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        socket.setdefaulttimeout(1)
-        result = s.connect_ex((ip, port))
+        socket.setdefaulttimeout(1)  # Set timeout to 1 second
+        result = s.connect_ex((ip, port))  # Connect to the port
         if result == 0:
             return f"Port {port}: OPEN"
         else:
@@ -84,39 +79,59 @@ def scan_port(ip, port):
     except socket.error:
         return f"Port {port}: ERROR"
 
-def main():
-    st.title("Port Scanner")
-    ip = st.text_input("Target IP Address:")
-    start_port = st.number_input("Start Port", min_value=1, max_value=65535, value=1)
-    end_port = st.number_input("End Port", min_value=1, max_value=65535, value=1024)
+def start_scan():
+    ip = entry_ip.get()
+    start_port = int(entry_start_port.get())
+    end_port = int(entry_end_port.get())
+    results_listbox.delete(0, tk.END)  # Clear previous results
 
-    if st.button("Start Scan"):
-        if ip and start_port and end_port:
-            st.write(f"Scanning ports {start_port} to {end_port} on {ip}...")
-            results = []
-            for port in range(start_port, end_port + 1):
-                result = scan_port(ip, port)
-                results.append(result)
-            for result in results:
-                st.write(result)
-        else:
-            st.error("Please enter a valid IP address and port range.")
+    if ip and start_port and end_port:
+        for port in range(start_port, end_port + 1):
+            result = scan_port(ip, port)
+            results_listbox.insert(tk.END, result)
+    else:
+        messagebox.showerror("Error", "Please enter valid input.")
 
-if __name__ == "__main__":
-    main()
+# Set up the GUI window
+window = tk.Tk()
+window.title("Port Scanner")
+
+# Input fields
+tk.Label(window, text="Target IP Address:").pack(pady=5)
+entry_ip = tk.Entry(window)
+entry_ip.pack(pady=5)
+
+tk.Label(window, text="Start Port:").pack(pady=5)
+entry_start_port = tk.Entry(window)
+entry_start_port.pack(pady=5)
+
+tk.Label(window, text="End Port:").pack(pady=5)
+entry_end_port = tk.Entry(window)
+entry_end_port.pack(pady=5)
+
+# Scan button
+scan_button = tk.Button(window, text="Start Scan", command=start_scan)
+scan_button.pack(pady=20)
+
+# Listbox to show the results
+results_listbox = tk.Listbox(window, width=50, height=15)
+results_listbox.pack(pady=5)
+
+# Run the GUI loop
+window.mainloop()
 
 
 ---
 
 Notes
 
-This scanner uses sequential scanning, so scanning a large range of ports may take some time.
+This port scanner uses sequential scanning, so scanning a large range may take time.
 
 For performance improvements, consider adding multithreading or asyncio.
 
 Use this tool ethically — only scan IP addresses you own or have permission to test.
 
-The app uses the socket library and connects via TCP.
+The application uses the socket library for TCP connections.
 
 
 
@@ -131,13 +146,27 @@ This project is licensed under the MIT License.
 
 Additional Information
 
-Requirements: Python 3.x, Streamlit
+Requirements: Python 3.x, Tkinter
 
 Contributions: Contributions are welcome! Please open an issue or submit a pull request.
 
 Issues: If you encounter any bugs or issues, please report them on the Issues page.
 
 
-### Explanation:
-- The content is fully written in **Markdown** syntax with proper section headers, code blocks, and instructions.
-- Code snippets are enclosed with triple backticks (```python) for Python code.
+
+---
+
+Contact
+
+Author: Arun Ammisetty
+
+
+### Explanation of the Markdown:
+
+- The **README.md** is structured with common sections like Features, Installation, Usage, Code Overview, etc.
+- The **Installation** section includes detailed steps to clone the repository, set up the virtual environment, install dependencies, and run the application.
+- The **Code Overview** includes the Python code for the **port scanner with GUI**.
+- The **Notes** section explains some important details about the tool and performance considerations.
+- **License** and **Additional Information** sections include licensing information and contact details.
+
+This should now be ready to be used as the **README.md** file in your GitHub repository.
