@@ -135,11 +135,3 @@ Issues: Report bugs or feature requests on the Issues page
 © Arun Ammisetty
 
 [Linkedin Profile](https://www.linkedin.com/in/arun-ammisetty)
-
-### Next Steps:
-- Save this content as `README.md` in the root of your project.
-- Rename your main script file to `port_scanner.py` (if not already).
-- Optionally, create a `requirements.txt` with:
-
-```text
-streamlit
