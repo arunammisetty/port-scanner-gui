@@ -1,45 +1,73 @@
-#!/bin/bash
+# Network Port Scanner GUI
 
-# ----------------------------------------------
-# Streamlit Port Scanner - Installation & Usage
-# ----------------------------------------------
+A simple and lightweight **port scanner web application** built using **Python** and **Streamlit**. It allows users to input a target IP address and scan a range of ports to determine which are open or closed.
 
-# This script will guide you through the installation and usage of the Streamlit Port Scanner app.
+## Features
 
-echo "----------------------------------------------"
-echo "Streamlit Port Scanner"
-echo "A simple and lightweight port scanner web application built using Python and Streamlit."
-echo "It allows users to input a target IP address and scan a range of ports to determine which are open or closed."
-echo "----------------------------------------------"
+- Input target IP address and custom port range
+- Scan ports directly from a web browser
+- Display real-time results with port status
+- Easy to set up and run locally
 
-echo ""
-echo "Features:"
-echo "- Input target IP address and custom port range"
-echo "- Scan ports directly from a web browser"
-echo "- Display real-time results with port status"
-echo "- Easy to set up and run locally"
-echo ""
+---
 
-# STEP 1: Clone the repository
-echo "1. Clone the Repository"
-echo "------------------------------------"
+## Installation
+
+Follow the steps below to install and run the app:
+
+### 1. Clone the Repository
+
+```bash
 git clone https://github.com/<your-username>/streamlit-port-scanner.git
 cd streamlit-port-scanner
 
-# STEP 2: Create and Activate a Virtual Environment (Optional)
-echo "2. (Optional) Create and Activate a Virtual Environment"
-echo "------------------------------------"
-python -m venv venv
-source venv/bin/activate  # On Windows use: venv\Scripts\activate
+2. (Optional) Create and Activate a Virtual Environment
 
-# STEP 3: Install Required Dependencies
-echo "3. Install Required Dependencies"
-echo "------------------------------------"
+It's highly recommended to use a virtual environment to avoid dependency conflicts.
+
+python -m venv venv
+source venv/bin/activate       # On Windows: venv\Scripts\activate
+
+3. Install Required Dependencies
+
 pip install streamlit
 
-# STEP 4: Create Python application file
-echo "4. Creating the Python application file (port_scanner.py)..."
-cat <<EOF > port_scanner.py
+4. Run the Application
+
+streamlit run port_scanner.py
+
+5. Access the Web App
+
+Streamlit will automatically open the app in your browser.
+If it doesn't, navigate to:
+
+http://localhost:8501
+
+
+---
+
+Usage
+
+1. Enter the target IP address (e.g., 192.168.1.1 or scanme.nmap.org).
+
+
+2. Specify the start port and end port for scanning.
+
+
+3. Click the Start Scan button to begin scanning.
+
+
+4. View the real-time status of each port in the web interface.
+
+
+
+
+---
+
+Code Overview
+
+Here's the Python code that powers the Streamlit app:
+
 import socket
 import streamlit as st
 
@@ -76,27 +104,40 @@ def main():
 
 if __name__ == "__main__":
     main()
-EOF
 
-# STEP 5: Run the Application
-echo "5. Run the Application"
-echo "------------------------------------"
-streamlit run port_scanner.py
 
-# ----------------------------------------------
-echo "Access the web app in your browser at: http://localhost:8501"
-echo "----------------------------------------------"
+---
 
-# NOTES
-echo "Notes:"
-echo "- This scanner uses sequential scanning, so scanning a large range may take time."
-echo "- For performance improvements, consider adding multithreading or asyncio."
-echo "- Use this tool ethically — only scan IP addresses you own or have permission to test."
-echo "- The app uses the socket library and connects via TCP."
-echo ""
+Notes
 
-# License Information
-echo "License: This project is licensed under the MIT License."
-echo ""
+This scanner uses sequential scanning, so scanning a large range of ports may take some time.
 
-# END OF SCRIPT
+For performance improvements, consider adding multithreading or asyncio.
+
+Use this tool ethically — only scan IP addresses you own or have permission to test.
+
+The app uses the socket library and connects via TCP.
+
+
+
+---
+
+License
+
+This project is licensed under the MIT License.
+
+
+---
+
+Additional Information
+
+Requirements: Python 3.x, Streamlit
+
+Contributions: Contributions are welcome! Please open an issue or submit a pull request.
+
+Issues: If you encounter any bugs or issues, please report them on the Issues page.
+
+
+### Explanation:
+- The content is fully written in **Markdown** syntax with proper section headers, code blocks, and instructions.
+- Code snippets are enclosed with triple backticks (```python) for Python code.
